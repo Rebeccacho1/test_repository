@@ -13,21 +13,21 @@ def review_menu(m):
     print("Pizza Menu")
     print("-" * 10)
     for i in range(0, len(m)):
-        output = "{:^15} --- ${}".format(m[i][0], m[i][1])
+        output = "{:^13} --- ${}".format(m[i][0], m[i][1])
         print(output)
 
 def review_order(o):
     if len(o) != 0:
         print("The customer has ordered: ")
         for i in range(0, len(o)):
-            output = "{:12} {} Pizzas --- ${}".format(o[i][0], o[i][1], o[i][2])
+            output = "{:^4} {} Pizzas --- ${}".format(o[i][0], o[i][1], o[i][2])
             print(output)
     else:
         print("Customer has not ordered anything yet")
 
 def customers_order(m, o):
-    cont = "y"
-    while cont == "y":
+    run = False
+    while run is False:
         pizza_name = validate_string("What type of pizza did you want to add? -> ", 6, 10)
         pizza_price = 0
         result = search_pizza(m, pizza_name)
@@ -37,7 +37,13 @@ def customers_order(m, o):
             pizza_price = result[1]
             o.append([quantity_pizza, pizza_name, pizza_price])
             print("You have added {} {} Pizzas to the list.".format(quantity_pizza, pizza_name))
-            return None
+            another_pizza = validate_string("Would you like to add another pizza? (Yes/No) ", 2, 3).upper()
+            if another_pizza == "YES":
+                continue
+            elif another_pizza == "NO":
+                 return None
+            else:
+                print("Your answer is incorrect please try again")
         else:
             print("This pizza is not in the menu. Please try again")
 
@@ -77,6 +83,7 @@ def update_order(o):
         for i in range(0, len(update_function)):
             print("{} : {}".format(update_function[i][0], update_function[i][1]))
         choices = validate_one_char(c, one_char_list)
+        print("=" * 60)
         if choices == "R":
             print("Review Customer's Order")
             print("-" * 23)
@@ -123,7 +130,7 @@ def main():
         ["Pepperoni", 4, 7.00],
         ["Margherita", 1, 4.00]
     ]
-    order=order_test
+    #order=order_test
 
     run = True
     while run is True:
@@ -143,7 +150,6 @@ def main():
             review_order(order)
             print("=" * 60)
             update_order(order)
-
         elif option == "O":
             review_menu(menu)
             print("=" * 60)
@@ -158,15 +164,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
